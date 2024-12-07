@@ -1,31 +1,86 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-  <%= form_for :filters, html: { class: 'input-field col s12' }, method: 'get' do |f| %>
-    <%= material_icon.search.css_class('prefix') %>
-    <%= f.text_field :title, autofocus: true, placeholder: 'Search by title', value: params.dig(:filters, :title) %>
-  <% end %>
+<%= form_with url: notes_path, method: :get, local: true do %>
+  <div class="input-field">
+    <%= text_field_tag :query, params[:query], placeholder: "Buscar por título o contenido", class: "form-control" %>
+    <%= submit_tag "Buscar", class: "btn" %>
+  </div>
+<% end %>
 
-  <% @notes.each do |note| %>
-    <%= link_to note_path(note) do %>
-      <div class="col s12">
-        <div class="card">
-          <div class="card-content black-text">
-            <span class="card-title">
-              <%= note.title %>
-              <span class="right" style="font-size: 50%">
-                <%= format_as_localtime note.created_at %>
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
 </div>
+
+<!-- Selector de orden -->
+<div class="order-selector">
+  <label for="order-notes">Ordenar notas:</label>
+  <select id="order-notes">
+    <option value="recent-desc">Más reciente a más antiguo</option>
+    <option value="recent-asc">Más antiguo a más reciente</option>
+    <option value="alpha-asc">Alfabético A-Z</option>
+    <option value="alpha-desc">Alfabético Z-A</option>
+  </select>
+</div>
+
+<% if @notes_by_month.present? %> <!-- Verifica que existan notas -->
+  <% @notes_by_month.each do |month, notes| %>
+    <div class="row">
+      <h5 class="col s12 center-align" style="margin-top: 20px; text-transform: uppercase;">
+        <%= month %>
+      </h5>
+    </div>
+    <div class="row">
+      <% notes.each do |note| %>
+        <div class="col s12 m6 l4"> <!-- Responsivo: 1 columna móviles, 2 tablets, 3 desktops -->
+          <%= link_to note_path(note) do %>
+            <div class="card">
+              <div class="card-content black-text">
+                <span class="card-title">
+                  <%= note.title || "Untitled" %>
+                  <span class="right" style="font-size: 50%">
+                    <%= note.created_at.strftime("%d/%m/%Y %H:%M") %>
+                  </span>
+                </span>
+                <p style="white-space: pre-line"><%= truncate(note.body, length: 100) %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="center-align">No notes found.</p>
+<% end %>
 
 <div class="fixed-action-btn">
-  <%= link_to new_note_path, title: 'New note', class: 'btn-floating btn-large pulse' do %>
-    <%= material_icon.add %>
+  <%= link_to new_note_path, class: 'btn-floating btn-large pulse tooltipped', data: { tooltip: 'Nueva nota', position: 'left' } do %>
+    <i class="material-icons">add</i>
   <% end %>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const orderSelect = document.getElementById('order-notes');
+
+    // Cargar la preferencia de orden desde localStorage
+    const savedOrder = localStorage.getItem('order-notes');
+    if (savedOrder) {
+      orderSelect.value = savedOrder;
+      applyOrder(savedOrder);
+    }
+
+    // Escuchar cambios en el selector
+    orderSelect.addEventListener('change', function () {
+      const selectedOrder = orderSelect.value;
+      localStorage.setItem('order-notes', selectedOrder);
+      applyOrder(selectedOrder);
+    });
+
+    // Aplicar el orden según la selección
+    function applyOrder(order) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('order', order);
+      window.location.href = url.toString(); // Recarga la página con el nuevo orden
+    }
+  });
+</script>

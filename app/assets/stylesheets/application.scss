@@ -5,3 +5,69 @@
 $primary-color: color("red", "base") !default;
 $secondary-color: color("red", "base") !default;
 @import "materialize";
+/* Modo oscuro */
+body.dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  .nav-wrapper.dark-theme {
+    background-color: #1e1e1e;
+  }
+  
+  .card.dark-theme {
+    background-color: #1f1f1f;
+    color: #ffffff;
+  }
+  
+  a.dark-theme {
+    color: #4caf50;
+  }
+  .order-selector {
+    margin: 20px 0;
+    color: #4caf50;
+  }
+  
+  .order-selector label {
+    display: block;
+    margin-bottom: 5px;
+    color: #4caf50;
+  }
+  
+  .order-selector select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #4caf50;
+  }
+  select {
+    width: 200px;
+    height: 40px;
+    border: 1px solid #060202;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+#order-notes {
+    visibility: visible !important;
+    display: block !important;
+    opacity: 1 !important;
+}
+
+#order-notes {
+    width: 100%; /* Usa todo el ancho del contenedor */
+    max-width: 300px; /* Limita el tamaño máximo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #121212; /* Bordes visibles */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #0faadd; /* Fondo blanco */
+    color: #660404; /* Color del texto */
+    font-size: 14px;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+  
+  
+  

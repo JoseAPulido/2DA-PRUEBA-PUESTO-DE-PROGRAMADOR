@@ -14,11 +14,11 @@
       </div>
       <div class="card-action">
         <%= link_to @note, title: 'Delete', method: :delete, data: { confirm: 'Are you sure?' }, class: 'black-text' do %>
-          <%= material_icon.delete %>
+          <i class="material-icons">delete</i>
         <% end %>
 
         <%= link_to edit_note_path(@note), title: 'Edit', class: 'black-text right' do %>
-          <%= material_icon.mode_edit %>
+          <i class="material-icons">mode_edit</i>
         <% end %>
       </div>
     </div>

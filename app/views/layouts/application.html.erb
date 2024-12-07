@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My note collection</title>
+    <title><%= t('app.title') %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,12 +11,30 @@
   </head>
 
   <body>
-   <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper">
-          <%= link_to notes_path, class: 'brand-logo center' do %>
-            My note collection
+    <div class="navbar-fixed">
+      <nav class="nav-wrapper">
+        <div class="container">
+          <!-- Logo -->
+          <%= link_to root_path, class: 'brand-logo center' do %>
+            <%= t('app.title') %>
           <% end %>
+
+          <!-- Botones en la derecha -->
+          <ul class="right">
+            <!-- Botón de cambio de tema -->
+            <li>
+              <a href="#" id="theme-toggle">
+                <i class="material-icons">brightness_6</i>
+              </a>
+            </li>
+
+            <!-- Botón de cambio de idioma -->
+            <li>
+              <a href="#" id="language-toggle">
+                <i class="material-icons">language</i>
+              </a>
+            </li>
+          </ul>
         </div>
       </nav>
     </div>
@@ -24,5 +42,6 @@
     <div class="container">
       <%= yield %>
     </div>
+
   </body>
 </html>

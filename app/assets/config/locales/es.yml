@@ -1,0 +1,5 @@
+es:
+  app:
+    title: "Título"
+    language_tooltip: "Cambiar Idioma"
+    theme_tooltip: "Cambiar Tema"

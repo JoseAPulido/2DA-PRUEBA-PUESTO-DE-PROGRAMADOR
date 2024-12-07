@@ -1,52 +1,19 @@
-Note.create([
-  {
-    title: "Old",
-    body: "MyOldTest",
-    created_at: 2.days.from_now,
-  },
-  {
-    title: "New",
-    body: "MyNewText",
-    created_at: 3.days.from_now,
-  },
-  {
-    title: "Older",
-    body: "MyOlderText",
-    created_at: 1.day.from_now,
-  },
-  {
-    title: 'Hello world!',
-    body: 'This is my first note',
-    created_at: Time.now,
-  },
-  {
-    title: 'hello_world',
-    body: 'The same, but underscored',
-    created_at: 1.day.ago,
-  },
-  {
-    title: 'hello\\ world',
-    body: 'The same, but with backslash-escaped space',
-    created_at: 2.day.ago,
-  },
-  {
-    title: 'Hola mundo!',
-    body: 'The same, but in Spanish',
-    created_at: 3.day.ago,
-  },
-  {
-    title: "Today's humidity: 70%",
-    body: 'A little hotter than usual',
-    created_at: 4.day.ago,
-  },
-  {
-    title: 'This one is a little older',
-    body: 'By half a year',
-    created_at: 6.months.ago,
-  },
-  {
-    title: 'world_hello',
-    body: "Ive run out of ideas\n\nBut I do have\n\na lot of linebreaks.",
-    created_at: 5.day.ago,
-  },
-].each {|r| r[:updated_at] = r[:created_at] })
+# Limpia las notas existentes antes de generar nuevas
+Note.destroy_all
+
+# Generar 200 notas distintas
+200.times do |i|
+  title = "Nota #{i + 1}: #{('A'..'Z').to_a.sample(5).join}"
+  content = "Contenido de la nota #{i + 1}: Lorem ipsum dolor sit amet."
+  body = "Cuerpo detallado de la nota #{i + 1}."
+  created_at = Time.at(rand((Time.now - 1.year).to_f..Time.now.to_f))
+
+  Note.create!(
+    title: title,
+    content: content,
+    body: body,
+    created_at: created_at
+  )
+end
+
+puts "200 notas creadas exitosamente."
